@@ -11,6 +11,11 @@ const keyListener = (event) => {
     ].forEach((key, index) => {
         if (event.type === 'keydown') {
             console.log("down", event.keyCode)
+            connectionManager.send({
+                type: 'state-update',
+                fragment: 'player',
+                state: key,
+            })
         }
     })
 }

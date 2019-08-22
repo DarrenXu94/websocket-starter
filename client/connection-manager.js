@@ -42,11 +42,6 @@ class ConnectionManager {
         // Example
         // 
 
-        // document.addEventListener('keydown', (e) => {
-        //     console.log(e)
-        // })
-
-
         //     const player = local.player;
         //     ['pos', 'matrix', 'score'].forEach(key => {
         //         player.events.listen(key, () => {
