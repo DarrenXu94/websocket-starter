@@ -13,8 +13,7 @@ const keyListener = (event) => {
             console.log("down", event.keyCode)
             connectionManager.send({
                 type: 'state-update',
-                fragment: 'player',
-                state: key,
+                state: "Initial state",
             })
         }
     })
