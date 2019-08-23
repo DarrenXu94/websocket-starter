@@ -80,6 +80,7 @@ class ConnectionManager {
                 this.peers.delete(id);
             }
         });
+        // console.log(peers)
 
         // const local = this.tetrisManager.instances[0];
         // const sorted = peers.clients.map(client => this.peers.get(client.id) || local);
@@ -89,18 +90,27 @@ class ConnectionManager {
 
     // Custom sample
     drawPeers() {
-        try {
 
-            this.peers.forEach(function drawElement(val, key, map) {
+        this.peers.forEach(function drawElement(val, key, map) {
+            try {
                 let template = document.querySelector('#peer-template');
+                // if (template.getElementsByTagName('P').length > 0) {
+                //     console.log(template.getElementsByClassName(key), 'ELEMENTS BY CLASS NAME', key)
+                //     //     template.removeChild(template.getElementsByClassName(key)[0])
+
+                // }
                 let para = document.createElement("p");
+                let nameNode = document.createTextNode(`${key} says: `);
                 let node = document.createTextNode(JSON.stringify(val.pressed.join('')));
+                para.appendChild(nameNode);
+                para.setAttribute("class", key)
                 para.appendChild(node);
                 template.appendChild(para)
-            })
-        } catch (e) {
-            console.log("Empty start")
-        }
+            } catch (e) {
+                console.log("Empty start")
+            }
+        })
+
     }
 
     updatePeer(id, state) {

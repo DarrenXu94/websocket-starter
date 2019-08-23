@@ -25,8 +25,15 @@ const keyListener = (event) => {
         // 
         // Draw random state things
         let template = this.document.querySelector('#player-template');
+        if (template.getElementsByTagName('P').length > 0) {
+            template.removeChild(template.getElementsByTagName('P')[0])
+            console.log(template.getElementsByTagName('P'))
+        }
         let para = document.createElement("p");
+        let meNode = document.createTextNode("Me: ");
+
         let node = document.createTextNode(JSON.stringify(state.pressed.join('')));
+        para.appendChild(meNode);
         para.appendChild(node);
         template.appendChild(para)
     }
