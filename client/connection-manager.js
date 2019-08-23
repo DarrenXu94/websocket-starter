@@ -1,9 +1,9 @@
 class ConnectionManager {
-    constructor() {
+    constructor(state) {
         this.conn = null;
         this.peers = new Map;
 
-        this.state = {}
+        this.state = state
     }
 
     connect(address) {
@@ -40,7 +40,7 @@ class ConnectionManager {
     watchEvents() {
         // Initialise the local key watchers
         // Example
-        // 
+
 
         //     const player = local.player;
         //     ['pos', 'matrix', 'score'].forEach(key => {
@@ -71,15 +71,12 @@ class ConnectionManager {
         console.log(peers, "peers")
         clients.forEach(client => {
             if (!this.peers.has(client.id)) {
-                // Send a message or something?
                 this.peers.set(client.id, {});
-
             }
         });
 
-        [...this.peers.entries()].forEach(([id, tetris]) => {
+        [...this.peers.entries()].forEach(([id, state]) => {
             if (!clients.some(client => client.id === id)) {
-                //         this.tetrisManager.removePlayer(tetris);
                 this.peers.delete(id);
             }
         });
@@ -87,6 +84,23 @@ class ConnectionManager {
         // const local = this.tetrisManager.instances[0];
         // const sorted = peers.clients.map(client => this.peers.get(client.id) || local);
         // this.tetrisManager.sortPlayers(sorted);
+        this.drawPeers()
+    }
+
+    // Custom sample
+    drawPeers() {
+        try {
+
+            this.peers.forEach(function drawElement(val, key, map) {
+                let template = document.querySelector('#peer-template');
+                let para = document.createElement("p");
+                let node = document.createTextNode(JSON.stringify(val.pressed.join('')));
+                para.appendChild(node);
+                template.appendChild(para)
+            })
+        } catch (e) {
+            console.log("Empty start")
+        }
     }
 
     updatePeer(id, state) {
@@ -95,7 +109,7 @@ class ConnectionManager {
         }
 
         this.peers.set(id, state)
-        console.log(this.peers)
+        // console.log(this.peers)
 
         // const tetris = this.peers.get(id);
         // tetris[fragment][key] = value;
@@ -105,6 +119,7 @@ class ConnectionManager {
         // } else {
         //     tetris.draw();
         // }
+        this.drawPeers()
     }
 
     receive(msg) {
